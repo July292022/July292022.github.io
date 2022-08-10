@@ -155,9 +155,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
       </div>
   </nav>
 </div>
@@ -195,6 +199,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/10/Opencv-Python-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/totoro.jpg">
+      <meta itemprop="name" content="Bo Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome!">
+      <meta itemprop="description" content="没事发点什么。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Welcome!">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/10/Opencv-Python-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Opencv(Python)学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-10 21:35:23 / 修改时间：21:40:50" itemprop="dateCreated datePublished" datetime="2022-08-10T21:35:23+08:00">2022-08-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Opencv/" itemprop="url" rel="index"><span itemprop="name">Opencv</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Opencv-Python-学习笔记"><a href="#Opencv-Python-学习笔记" class="headerlink" title="Opencv(Python)学习笔记"></a>Opencv(Python)学习笔记</h1><h2 id="Opencv常用函数"><a href="#Opencv常用函数" class="headerlink" title="Opencv常用函数"></a>Opencv常用函数</h2><p><strong>1. inRange(src,lowerb,upperb，dst&#x3D;None)</strong><br>src:输入图像，lowerb:下限，upperb:上限<br>dst:输出图像,处在上下限之间的像素值为1，其余为0<br><strong>2. bitwise_and(src1, src2, dst&#x3D;None, mask&#x3D;None)</strong><br>src1,src2:输入图像，dst:输出图像，mask：掩膜<br>dst &#x3D; src1 &amp; src2（如果有mask，输出应该是dst &#x3D; src1 &amp; src2 &amp; mask）<br><strong>3. warpAffine(src, M, dsize, dst&#x3D;None, flags&#x3D;None, borderMode&#x3D;None, borderValue&#x3D;None)</strong><br>src：输入图像 M:变换矩阵 dsize:输出图像规格 dst：输出图像(flags，borderMode，borderValue这几个参数还没用过)<br>补充：变换矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">M = np.float32([[<span class="number">1</span>,<span class="number">0</span>,tx],[<span class="number">0</span>,<span class="number">1</span>,ty]])  <span class="comment">#平移</span></span><br><span class="line">M = cv.getRotationMatrix2D(((cols-<span class="number">1</span>)/<span class="number">2.0</span>,(rows-<span class="number">1</span>)/<span class="number">2.0</span>),<span class="number">90</span>,<span class="number">0.5</span>)  <span class="comment">#旋转</span></span><br><span class="line">M = cv.getAffineTransform(pts1,pts2)  <span class="comment">#仿射变换</span></span><br></pre></td></tr></table></figure>
+<p><strong>4. resize(src, dsize, dst&#x3D;None, fx&#x3D;None, fy&#x3D;None, interpolation&#x3D;None)</strong><br>src:输入图像，dsize:输出图像规格，dst:输出图像，fx:水平轴比例，fy:垂直轴比例</p>
+<h2 id="Opencv相关概念"><a href="#Opencv相关概念" class="headerlink" title="Opencv相关概念"></a>Opencv相关概念</h2><p>1.掩膜</p>
+<h2 id="Opnecv常用方法"><a href="#Opnecv常用方法" class="headerlink" title="Opnecv常用方法"></a>Opnecv常用方法</h2><p>1.获取HSV值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">green = np.uint8([[[<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span> ]]])</span><br><span class="line">hsv_green = cv.cvtColor(green,cv.COLOR_BGR2HSV)</span><br><span class="line"><span class="built_in">print</span>( hsv_green )</span><br></pre></td></tr></table></figure>
+
+<p>#参考资料<br>官方文档的汉化：<a target="_blank" rel="noopener" href="http://woshicver.com/">Opencv官方文档(中文)</a><br>Opencv图像运算的CSDN博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yukinoai/article/details/86507522">Opencv图像的基本运算</a></p>
+<p><em>有时间会继续更新…</em></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
