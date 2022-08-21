@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Hello World</title>
-    <url>/2022/08/04/hello-world/</url>
+    <url>/2022/08/04/Hello%20World/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -21,19 +21,98 @@
   <entry>
     <title>Opencv(Python)学习笔记</title>
     <url>/2022/08/10/Opencv-Python-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="Opencv-Python-学习笔记"><a href="#Opencv-Python-学习笔记" class="headerlink" title="Opencv(Python)学习笔记"></a>Opencv(Python)学习笔记</h1><h2 id="Opencv常用函数"><a href="#Opencv常用函数" class="headerlink" title="Opencv常用函数"></a>Opencv常用函数</h2><p><strong>1. inRange(src,lowerb,upperb，dst&#x3D;None)</strong><br>使用方法：生成一个掩膜，该掩膜在给定区间内为1，其余区间为0<br>参数：src:输入图像，lowerb:下限，upperb:上限<br>dst:输出图像,处在上下限之间的像素值为1，其余为0 </p>
-<p><strong>2. bitwise_and(src1, src2, dst&#x3D;None, mask&#x3D;None)</strong><br>使用方法：对输入的两个图像进行与运算，可选择加入掩膜参数，进行进一步处理<br>参数：src1,src2:输入图像，dst:输出图像，mask：掩膜<br>dst &#x3D; src1 &amp; src2（如果有mask，输出应该是dst &#x3D; src1 &amp; src2 &amp; mask） </p>
-<p><strong>3. warpAffine(src, M, dsize, dst&#x3D;None, flags&#x3D;None, borderMode&#x3D;None, borderValue&#x3D;None)</strong><br>使用方法：跟据不同的变换矩阵，对图像进行几何变换<br>参数：src：输入图像 M:变换矩阵 dsize:输出图像规格 dst：输出图像(flags，borderMode，borderValue这几个参数还没用过) </p>
+    <content><![CDATA[<h1 id="Opencv-Python-学习笔记"><a href="#Opencv-Python-学习笔记" class="headerlink" title="Opencv(Python)学习笔记"></a>Opencv(Python)学习笔记</h1><h2 id="Opencv常用函数"><a href="#Opencv常用函数" class="headerlink" title="Opencv常用函数"></a>Opencv常用函数</h2><p><strong>1. inRange(src,lowerb,upperb，dst&#x3D;None)</strong>  </p>
+<ul>
+<li>使用方法：生成一个掩膜，该掩膜在给定区间内为1，其余区间为0  </li>
+<li>参数：src:输入图像，lowerb:下限，upperb:上限<br>dst:输出图像,处在上下限之间的像素值为1，其余为0</li>
+</ul>
+<p><strong>2. bitwise_and(src1, src2, dst&#x3D;None, mask&#x3D;None)</strong>  </p>
+<ul>
+<li>使用方法：对输入的两个图像进行与运算，可选择加入掩膜参数，进行进一步处理    </li>
+<li>参数：src1,src2:输入图像，dst:输出图像，mask：掩膜<br>dst &#x3D; src1 &amp; src2（如果有mask，输出应该是dst &#x3D; src1 &amp; src2 &amp; mask）</li>
+</ul>
+<p><strong>3. warpAffine(src, M, dsize, dst&#x3D;None, flags&#x3D;None, borderMode&#x3D;None, borderValue&#x3D;None)</strong>  </p>
+<ul>
+<li>使用方法：跟据不同的变换矩阵，对图像进行几何变换  </li>
+<li>参数：src：输入图像 M:变换矩阵 dsize:输出图像规格 dst：输出图像(flags，borderMode，borderValue这几个参数还没用过)</li>
+</ul>
 <p><em>补充：变换矩阵</em></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">M = np.float32([[<span class="number">1</span>,<span class="number">0</span>,tx],[<span class="number">0</span>,<span class="number">1</span>,ty]])  <span class="comment">#平移</span></span><br><span class="line">M = cv.getRotationMatrix2D(((cols-<span class="number">1</span>)/<span class="number">2.0</span>,(rows-<span class="number">1</span>)/<span class="number">2.0</span>),<span class="number">90</span>,<span class="number">0.5</span>)  <span class="comment">#旋转</span></span><br><span class="line">M = cv.getAffineTransform(pts1,pts2)  <span class="comment">#仿射变换</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>4. resize(src, dsize, dst&#x3D;None, fx&#x3D;None, fy&#x3D;None, interpolation&#x3D;None)</strong><br>使用方法：改变输入图像的大小<br>参数：src:输入图像，dsize:输出图像规格，dst:输出图像，fx:水平轴比例，fy:垂直轴比例</p>
-<p><strong>5.findContours(image, mode, method, contours&#x3D;None, hierarchy&#x3D;None, offset&#x3D;None)</strong><br>使用方法：从一个二值图像中找到轮廓<br>参数：image:源图像,mode:边缘检测模式#RetrievalModes,method：轮廓逼近方法#ContourApproximationModes,contours,hierarchy,offset还没用过  </p>
-<p><strong>6.drawContours(image, contours, contourIdx, color, thickness&#x3D;None, lineType&#x3D;None, hierarchy&#x3D;None, maxLevel&#x3D;None, offset&#x3D;None)</strong><br>使用方法：配合轮廓查找函数，在原图上画出轮廓<br>参数：image：原图像，contours：轮廓（被存储为点向量），contourIdx:表明绘制哪个轮廓</p>
-<h2 id="Opencv相关概念"><a href="#Opencv相关概念" class="headerlink" title="Opencv相关概念"></a>Opencv相关概念</h2><p>1.掩膜<br>2.轮廓</p>
+<p><strong>4. resize(src, dsize, dst&#x3D;None, fx&#x3D;None, fy&#x3D;None, interpolation&#x3D;None)</strong>  </p>
+<ul>
+<li>使用方法：改变输入图像的大小</li>
+<li>参数：src:输入图像，dsize:输出图像规格，dst:输出图像，fx:水平轴比例，fy:垂直轴比例</li>
+</ul>
+<p><strong>5.findContours(image, mode, method, contours&#x3D;None, hierarchy&#x3D;None, offset&#x3D;None)</strong>   </p>
+<ul>
+<li>使用方法：从一个二值图像中找到轮廓</li>
+<li>参数：image:源图像,mode:边缘检测模式#RetrievalModes,method：轮廓逼近方法#ContourApproximationModes,contours,hierarchy,offset还没用过</li>
+</ul>
+<p><strong>6.drawContours(image, contours, contourIdx, color, thickness&#x3D;None, lineType&#x3D;None, hierarchy&#x3D;None, maxLevel&#x3D;None, offset&#x3D;None)</strong>    </p>
+<ul>
+<li>使用方法：配合轮廓查找函数，在原图上画出轮廓</li>
+<li>参数：image：原图像，contours：轮廓（被存储为点向量），contourIdx:表明绘制哪个轮廓</li>
+</ul>
+<p><strong>7.轮廓性质函数：</strong></p>
+<ol>
+<li>特征矩：cv.moments()</li>
+<li>轮廓面积：cv.contourArea()</li>
+<li>轮廓周长：cv.arcLength()</li>
+<li>轮廓近似：cv.approxPolyDP()</li>
+<li>轮廓凸包：cv.convexHull()(凸度缺陷还会遇到)</li>
+<li>检查凸度：cv.isContourConvex()</li>
+<li>边界矩形：  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x,y,w,h = cv.boundingRect(cnt) <span class="comment"># 直角矩形</span></span><br><span class="line">rect = cv.minAreaRect(cnt)</span><br><span class="line">box = cv.boxPoints(rect)</span><br><span class="line">box = np.int0(box)</span><br><span class="line">cv.drawContours(img,[box],<span class="number">0</span>,(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>),<span class="number">2</span>) <span class="comment"># 旋转矩形</span></span><br></pre></td></tr></table></figure></li>
+<li>最小闭合圈：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">(x,y),radius = cv.minEnclosingCircle(cnt)</span><br><span class="line">center = (<span class="built_in">int</span>(x),<span class="built_in">int</span>(y))</span><br><span class="line">radius = <span class="built_in">int</span>(radius)</span><br><span class="line">cv.circle(img,center,radius,(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+<li>椭圆拟合：<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ellipse = cv.fitEllipse(cnt)</span><br><span class="line">cv.ellipse(img,ellipse,(<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>),<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+<li>直线拟合</li>
+</ol>
+<p><strong>8. cv.matchShapes()</strong><br>跟文字识别有关，我们以后再学</p>
+<p><strong>9. calcHist(images, channels, mask, histSize, ranges, hist&#x3D;None, accumulate&#x3D;None)</strong></p>
+<ul>
+<li>使用方法：获取图像的直方图，该函数比histogram()运算速度更快  </li>
+<li>参数：images:原图像；channels：通道，[0][1][2]分别对应蓝色、绿色、红色通道，灰度图像时为[0];histSize:BIN值，全尺寸为[256]；ranges：RANGE值，通常为[0,256]</li>
+</ul>
+<h2 id="Opencv相关概念"><a href="#Opencv相关概念" class="headerlink" title="Opencv相关概念"></a>Opencv相关概念</h2><ol>
+<li>掩膜</li>
+<li>轮廓：<ol>
+<li>轮廓的数据类型</li>
+<li>轮廓的性质<ol>
+<li>轮廓近似：Douglas-Peucker算法实现</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>文字识别</li>
+<li>直方图：<ol>
+<li>相关术语：<ul>
+<li>BINS：直方图中将像素平均分为的组数</li>
+<li>DIMS：收集数据的参数的数量</li>
+<li>RANGE：测量强度值的范围，通常为[0,256]</li>
+</ul>
+</li>
+<li>直方图计算：<ul>
+<li>cv.calcHist()</li>
+<li>np.histogram()</li>
+</ul>
+</li>
+<li>绘制直方图：<ul>
+<li>matplotlib.pyplot.hist()</li>
+</ul>
+<p><code>plt.hist(img.ravel(),256,[0,256]) #输入图像降维为一维</code></p>
+<ul>
+<li>np.plot()&amp;cv.line()</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
 <h2 id="Opnecv常用方法"><a href="#Opnecv常用方法" class="headerlink" title="Opnecv常用方法"></a>Opnecv常用方法</h2><p>1.获取HSV值</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">green = np.uint8([[[<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span> ]]])</span><br><span class="line">hsv_green = cv.cvtColor(green,cv.COLOR_BGR2HSV)</span><br><span class="line"><span class="built_in">print</span>( hsv_green )</span><br></pre></td></tr></table></figure>
 
+<ol start="2">
+<li>二维数组降维<br>函数ravel()</li>
+</ol>
 <p>#参考资料</p>
 <p>官方文档的汉化：<a href="http://woshicver.com/">Opencv官方文档(中文)</a><br>Opencv图像运算的CSDN博客：<a href="https://blog.csdn.net/yukinoai/article/details/86507522">Opencv图像的基本运算</a></p>
 <p><em>有时间会继续更新…</em></p>
