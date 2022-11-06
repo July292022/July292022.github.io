@@ -73,8 +73,10 @@
 <li>使用方法：获取图像的直方图，该函数比histogram()运算速度更快  </li>
 <li>参数：images:原图像；channels：通道，[0][1][2]分别对应蓝色、绿色、红色通道，灰度图像时为[0];histSize:BIN值，全尺寸为[256]；ranges：RANGE值，通常为[0,256]</li>
 </ul>
+<p><strong>10. eval()</strong><br><a href="https://blog.csdn.net/qq_26442553/article/details/94396532">eval()函数使用详解</a></p>
 <h2 id="Opencv相关概念"><a href="#Opencv相关概念" class="headerlink" title="Opencv相关概念"></a>Opencv相关概念</h2><ol>
 <li>掩膜</li>
+<li>Canny边缘检测</li>
 <li>轮廓：<ol>
 <li>轮廓的数据类型</li>
 <li>轮廓的性质<ol>
@@ -104,6 +106,9 @@
 <li>np.plot()&amp;cv.line()</li>
 </ul>
 </li>
+<li><h2 id="直方图均衡"><a href="#直方图均衡" class="headerlink" title="直方图均衡"></a>直方图均衡</h2></li>
+<li>二维直方图（看参考文档现学就行）</li>
+<li>直方图反投影（这个我不会）</li>
 </ol>
 </li>
 </ol>
@@ -120,5 +125,32 @@
       <categories>
         <category>Opencv</category>
       </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/11/06/DSP_picket_fence/</url>
+    <content><![CDATA[<h2 id="时域窗长度和FFT计算点数对频率分辨率和栅栏效应的影响"><a href="#时域窗长度和FFT计算点数对频率分辨率和栅栏效应的影响" class="headerlink" title="时域窗长度和FFT计算点数对频率分辨率和栅栏效应的影响"></a>时域窗长度和FFT计算点数对频率分辨率和栅栏效应的影响</h2><h3 id="频率分辨率"><a href="#频率分辨率" class="headerlink" title="频率分辨率"></a>频率分辨率</h3><p>频率分辨率：在DFT中频率轴上的最小频率间隔。<br>$f_0&#x3D;\frac{f_s}{N}&#x3D;\frac{1}{N*T_s}&#x3D;\frac{1}{T}$<br>N — 采样点数<br>$f_s$ — 采样频率<br>$T_s$ — 采样间隔  </p>
+<h3 id="栅栏效应"><a href="#栅栏效应" class="headerlink" title="栅栏效应"></a>栅栏效应</h3><p>DFT的频谱是DTFT频谱的采样。<br>计算分辨率：$F_0&#x3D;\frac{f_s}{N}$<br>物理分辨率: $F_0&#x3D;\frac{f_s}{M}$<br>N — DFT点数<br>M — 信号在持续时间$T_0$中的采样点数</p>
+<h3 id="实例及结论"><a href="#实例及结论" class="headerlink" title="实例及结论"></a>实例及结论</h3><p>含有两个间隔较小的频率分量的余弦序列为： $x &#x3D; cos(\omega_1t) + cos(\omega_2t),\omega_1 &#x3D; 4.8,\omega_2 &#x3D; 5.2$<br>对该余弦序列以$f_s &#x3D; 20Hz$的采样频率进行采样，得到离散的序列$x[n]$。<br>分别在20,60,100个采样点和1倍，4倍，32倍长度的时域窗长度的条件下进行FFT运算，得到如下结果：</p>
+<center>FFT计算点数 = 20  时域窗长度 = 20，80，640</center>   
+
+<p><img src="/DSP_figure1.jpg"></p>
+<center>FFT计算点数 = 60  时域窗长度 = 60，240，1920</center>   
+
+<p><img src="/DSP_figure2.jpg"></p>
+<center>FFT计算点数 = 100  时域窗长度 = 100，400，3200</center>   
+
+<p><img src="/DSP_figure3.jpg"></p>
+<p><em><strong>结论：（还没写完）</strong></em><br>增大FFT计算点数可以改善物理分辨率，相当于提高栅栏后面图片的画质<br>增大时域窗长度可以改善计算分辨率，相当于减小栅栏的宽度</p>
+<p><strong>问题：</strong></p>
+<ol>
+<li>不同情况下DFT频谱的幅度存在差异</li>
+<li>在补零点数较多时，幅度最大值有一定偏差，不是恰好出现在4.8和5.2处</li>
+<li>代码中使用补零的方式近似得到DTFT，还需要改进求DTFT的方法</li>
+</ol>
+<h3 id="Matlab代码"><a href="#Matlab代码" class="headerlink" title="Matlab代码"></a>Matlab代码</h3><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="comment">% M为FFT计算点数，N为窗函数长度</span></span><br><span class="line"><span class="comment">% N&gt;&gt;M时近似得到DTFT</span></span><br><span class="line"></span><br><span class="line">f1 = <span class="number">4.8</span>; f2 = <span class="number">5.2</span>; <span class="comment">% 两个间隔较小的频率分量大小</span></span><br><span class="line">fs = <span class="number">20</span>; <span class="comment">% 采样频率（满足采样定理）</span></span><br><span class="line">L = [<span class="number">1</span> <span class="number">3</span> <span class="number">5</span>]; <span class="comment">% 采样时间（这里改变FFT计算点数）</span></span><br><span class="line">M = L * fs; <span class="comment">% 采样点数，即FFT计算点数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = (<span class="number">1</span>:<span class="number">3</span>)</span><br><span class="line">    n = (<span class="number">0</span>:M(<span class="built_in">i</span>)<span class="number">-1</span>);</span><br><span class="line">    x = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span> * f1 * n * <span class="number">1</span>/fs) + <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span> * f2 * n * <span class="number">1</span>/fs); <span class="comment">% 采样得到的余弦序列</span></span><br><span class="line">    <span class="comment">% 使用矩形窗（这里改变窗函数长度）</span></span><br><span class="line">    X = fft(x); <span class="comment">% M，4M,32M长度的时域窗，得到DFT变换</span></span><br><span class="line">    X1 = fft(x,<span class="number">4</span>*M(<span class="built_in">i</span>)); </span><br><span class="line">    X2 = fft(x,<span class="number">32</span>*M(<span class="built_in">i</span>)); <span class="comment">% 原代码加上了fftshift()</span></span><br><span class="line">    <span class="comment">% 画图</span></span><br><span class="line">    <span class="built_in">figure</span> </span><br><span class="line">    subplot(<span class="number">311</span>);stem((-<span class="built_in">length</span>(X)/<span class="number">2</span>:<span class="built_in">length</span>(X)/<span class="number">2</span><span class="number">-1</span>)*fs/<span class="built_in">length</span>(X),<span class="built_in">abs</span>(X));</span><br><span class="line">    xlabel(<span class="string">&#x27;f&#x27;</span>);ylabel(<span class="string">&#x27;|X[k]|&#x27;</span>);title([<span class="string">&#x27;M=&#x27;</span>,num2str(M(<span class="built_in">i</span>)),<span class="string">&#x27; N=&#x27;</span>,num2str(M(<span class="built_in">i</span>))]);</span><br><span class="line">    subplot(<span class="number">312</span>);<span class="built_in">plot</span>((-<span class="built_in">length</span>(X1)/<span class="number">2</span>:<span class="built_in">length</span>(X1)/<span class="number">2</span><span class="number">-1</span>)*fs/<span class="built_in">length</span>(X1),<span class="built_in">abs</span>(X1));</span><br><span class="line">    xlabel(<span class="string">&#x27;f&#x27;</span>);ylabel(<span class="string">&#x27;|X[k]|&#x27;</span>);title([<span class="string">&#x27;M=&#x27;</span>,num2str(M(<span class="built_in">i</span>)),<span class="string">&#x27; N=&#x27;</span>,num2str(<span class="number">4</span>*M(<span class="built_in">i</span>))]);</span><br><span class="line">    subplot(<span class="number">313</span>);<span class="built_in">plot</span>((-<span class="built_in">length</span>(X2)/<span class="number">2</span>:<span class="built_in">length</span>(X2)/<span class="number">2</span><span class="number">-1</span>)*fs/<span class="built_in">length</span>(X2),<span class="built_in">abs</span>(X2));</span><br><span class="line">    xlabel(<span class="string">&#x27;f&#x27;</span>);ylabel(<span class="string">&#x27;|X[k]|&#x27;</span>);title([<span class="string">&#x27;M=&#x27;</span>,num2str(M(<span class="built_in">i</span>)),<span class="string">&#x27; N=&#x27;</span>,num2str(<span class="number">32</span>*M(<span class="built_in">i</span>))]);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://www.bilibili.com/video/BV1g34y1i7Bk/?spm_id_from=333.337.search-card.all.click&vd_source=7f03e6e09dafb8f599b0be5691f36be5">栅栏效应视频（包括改善方法及代码）</a><br><a href="https://blog.csdn.net/daijingxin/article/details/125399792">DFT频率分辨率</a><br><a href="https://www.bilibili.com/video/BV1jS4y1H72V/?spm_id_from=pageDriver&vd_source=7f03e6e09dafb8f599b0be5691f36be5">DFT视频</a></p>
+]]></content>
   </entry>
 </search>
